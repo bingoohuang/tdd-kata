@@ -16,10 +16,6 @@ import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class BaseConverterTest {
-    private final int decimal;
-    private final int base;
-    private final String expected;
-
     @Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
@@ -30,8 +26,13 @@ public class BaseConverterTest {
                 {20, 16, "14"},
                 {15, 16, "F"},
                 {40, 20, "20"},
+                {40, 8, "50"},
         });
     }
+
+    private final int decimal;
+    private final int base;
+    private final String expected;
 
     public BaseConverterTest(int decimal, int base, String expected) {
         this.decimal = decimal;
@@ -42,5 +43,10 @@ public class BaseConverterTest {
     @Test
     public void test() {
         assertThat(convert(decimal, base), is(equalTo(expected)));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testException() {
+        convert(1, 100);
     }
 }

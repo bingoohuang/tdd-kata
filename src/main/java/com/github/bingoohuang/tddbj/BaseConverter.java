@@ -4,7 +4,7 @@ public class BaseConverter {
     static char[] SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     public static String convert(int decimal, int base) {
-        if (base > SYMBOLS.length) {
+        if (base < 2 || base > SYMBOLS.length) {
             throw new RuntimeException(base + " is not supported");
         }
 
@@ -17,9 +17,7 @@ public class BaseConverter {
             remain = remain / base;
         }
 
-        if (remain > 0) {
-            converted.insert(0, SYMBOLS[remain]);
-        }
+        converted.insert(0, SYMBOLS[remain]);
 
         return converted.toString();
     }
